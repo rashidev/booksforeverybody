@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+Name: <p th:text="${book.name}"></p>
+Category: <p th:text="${book.category}"></p>
+Author: <p th:text="${book.author}"></p>
+Price: <p th:text="${book.price}"></p>
+Year: <p th:text="${book.year}"></p>
+Description: <p th:text="${book.description}"></p>
 
+<table class="table table-striped">
+    <tr>
+        <th>Message</th>
+        <th>Rating</th>
+        <th>User</th>
+    </tr>
+    <tr th:each="comment: ${book.comments}">
+        <td th:text="${comment.message}"></td>
+        <td th:text="${comment.rating}"></td>
+        <td th:text="${comment.user.firstName}"></td>
+    </tr>
+</table>
 </body>
 </html>
