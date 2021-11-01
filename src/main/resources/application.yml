@@ -5,16 +5,16 @@ spring:
     password: student #12345
   liquibase:
     change-log: classpath:liquibase/changelog-master.yml
-#  jpa:
+  jpa:
 #    show-sql: true
-#    properties:
+    properties:
 #      hibernate:
 #        show-sql: true
 #        format-sql: true
-#      javax:
-#        persistence:
-#          validation:
-#            mode: none
+      javax:
+        persistence:
+          validation:
+            mode: none
 
 logging:
   level:
