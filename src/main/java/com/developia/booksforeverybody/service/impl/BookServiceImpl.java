@@ -1,9 +1,10 @@
-package com.developia.booksforeverybody.service;
+package com.developia.booksforeverybody.service.impl;
 
 import com.developia.booksforeverybody.dao.entity.BookEntity;
 import com.developia.booksforeverybody.dao.entity.BookStatus;
 import com.developia.booksforeverybody.dao.repository.BookRepository;
 import com.developia.booksforeverybody.exception.NotFoundException;
+import com.developia.booksforeverybody.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
