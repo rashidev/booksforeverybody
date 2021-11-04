@@ -19,8 +19,6 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
 
-
-
     public CartServiceImpl(UserRepository userRepository,
                            CartRepository cartRepository, BookRepository bookRepository) {
         this.userRepository = userRepository;
@@ -37,13 +35,13 @@ public class CartServiceImpl implements CartService {
 
                         });
 
-        CartEntity cart =  cartRepository
-               .findByUserId(user.getId()).orElseThrow(
-                ()->{
-                    throw new NotFoundException("Cart not found!");
-                }
-        );
-       return cart;
+        CartEntity cart = cartRepository
+                .findByUserId(user.getId()).orElseThrow(
+                        () -> {
+                            throw new NotFoundException("Cart not found!");
+                        }
+                );
+        return cart;
     }
 
     @Override
@@ -55,22 +53,53 @@ public class CartServiceImpl implements CartService {
                         }
                 );
 
-        BookEntity book =   bookRepository
+        BookEntity book = bookRepository
                 .findByIdAndStatusIsNot(bookId, BookStatus.DELETED)
                 .orElseThrow(
                         () -> {
-                            throw  new NotFoundException("Book not found!");
+                            throw new NotFoundException("Book not found!");
                         }
                 );
         CartEntity cart = cartRepository
                 .findByUserId(user.getId()).orElseThrow(
                         () -> {
-                            throw  new NotFoundException("Cart not found!");
+                            throw new NotFoundException("Cart not found!");
 
                         }
                 );
         List<BookEntity> books = cart.getBooks();
         books.add(book);
+        cart.setBooks(books);
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void deleteBookFromCart(String username, Long bookId) {
+        UserEntity user = userRepository
+                .findUserByUsername(username)
+                .orElseThrow(
+                        () -> {
+                            throw new NotFoundException("User not found!");
+
+                        }
+                );
+        CartEntity cart = cartRepository
+                .findByUserId(user.getId())
+                .orElseThrow(
+                        () -> {
+                            throw new NotFoundException("Cart not found!");
+                        }
+
+                );
+        BookEntity book = bookRepository
+                .findByIdAndStatusIsNot(bookId, BookStatus.DELETED)
+                .orElseThrow(
+                        () -> {
+                            throw new NotFoundException("Book not found!");
+                        }
+                );
+        List<BookEntity> books = cart.getBooks();
+        books.remove(book);
         cart.setBooks(books);
         cartRepository.save(cart);
     }
