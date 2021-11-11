@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 800;
+}
+
+.wrapper {
+    padding: 50px 8%;
+}
+
+.access-divider {
+    padding-top: 30px;
+}
+
+.book-details {
+    margin: 30px 0;
+    display: flex;
+}
+
+.right-details {
+    margin-left: 80px;
+}
+
+.book-details h4 {
+    color: rgba(99, 98, 98, 0.699);
+}
+
+.book-details span {
+    font-weight: normal;
+    padding-left: 10px;
+    color: black;
+}
+
+.book-details h4 {
+    margin-bottom: 20px;
+}
+
+.fa-star {
+    color: orange !important;
+}
+
+.admin-access {
+    margin-top: 30px;
+}
+
+.update-btn, .delete-btn, .add-review-btn {
+    height: 50px;
+    padding: 10px 20px;
+    border: none;
+    background-color: rgb(255, 187, 0);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000000;
+}
+
+.m-right {
+    padding-left: 30px;
+}
+
+.delete-btn {
+    background-color:rgb(177, 27, 27);
+    color: white;
+    margin-right: 20px;
+}
+
+.add-review-btn {
+    background-color: lightblue;
+}
+
+.buttons {
+    padding: 30px 0 50px 0;
+    display: flex;
+}
+
+.inputs {
+    padding-top: 30px;
+}
+
+.rating-input {
+    width: 70px;
+}
+
+.input-rating, .input-description {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+input {
+    width: 60px;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+.input-rating h4 {
+    margin-right: 55px;
+}
+
+.input-description h4 {
+    margin-right: 20px;
+}
+
+textarea {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+.add-review {
+    padding-bottom: 30px;
+}
+
+.review-container-heading {
+    margin-top: 30px;
+    display: flex;
+}
+
+.review-container-heading h4 {
+    width: 33%;
+}
+
+.reviews {
+    padding: 30px 0;
+}
+
+.review-item {
+    padding-bottom: 10px;
+    display: flex;
+    border-bottom: 1px solid rgba(151, 150, 150, 0.726);
+}
+
+.review-item h4 {
+    padding-top: 20px;
+    width: 33%;
+    font-weight: normal;
+    padding-right: 20px;
+}

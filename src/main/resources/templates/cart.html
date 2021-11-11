@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Price</th>
+    </tr>
+    <tr th:each="book:${cart.books}">
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.category}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.price}"></td>
+        <td><a th:href="@{'/books/'+${book.id}}">view</a></td>
+        <td>
+            <form th:action="@{'/carts/remove/book/'+${book.id}}" method="post">
+                <button type="submit" class="btn btn-danger">Remove</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

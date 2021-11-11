@@ -61,14 +61,10 @@ public class CartServiceImpl implements CartService {
                         }
                 );
         CartEntity cart = cartRepository
-                .findByUserId(user.getId()).orElseThrow(
-                        () -> {
-                            throw new NotFoundException("Cart not found!");
-
-                        }
-                );
+                .findByUserId(user.getId()).orElse(new CartEntity());
         List<BookEntity> books = cart.getBooks();
         books.add(book);
+        cart.setUserId(user.getId());
         cart.setBooks(books);
         cartRepository.save(cart);
     }

@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 800;
+}
+
+.wrapper {
+    padding: 50px 8%;
+}
+
+.book-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.book {
+    background-image: url('../images/cover.png');
+    background-size: 300px;
+    width: 300px;
+    height: 350px;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(29, 41, 24, 0.466);
+    background-position-x: center;
+    position: relative;
+    margin-right: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.book-title {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    border-bottom: 1px solid white;
+    width: 170px;
+    transform: rotate(3deg);
+    text-align: right;
+    font-size: 25px;
+    padding: 0 10px;
+    color: rgb(26, 56, 56);
+    transition: padding ease-in-out .5s;
+}
+
+.description {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    background-color: rgba(65, 28, 28, 0.637);
+    width: 100%;
+    color: white;
+    padding: 10px 20px;
+    display: none;
+    font-size: 20px;
+}
+
+.author p {
+    display: inline-block;
+}
+
+.author p:first-child, .price p:first-child {
+    color: rgb(241, 187, 187);
+    border-bottom: 1px solid white;
+}
+
+.author-name {
+    margin-left: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.price {
+    margin-top: 20px;
+}
+
+.price-tag {
+    margin-left: 25px;
+}
+
+.price-tag::after {
+    content: '\0024';
+}
+
+.price p {
+    display: inline-block;
+}
+
+.book:hover .description {
+    display: block;
+}
+
+.book:hover .book-title {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+.admin-create {
+    height: 50px;
+    padding: 10px 20px;
+    border: none;
+    background-color: rgb(29, 131, 15);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    top: 50px;
+    right: 8%;
+}

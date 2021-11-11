@@ -1,25 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
-    <title>Books</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <title>Book store</title>
 </head>
 <body>
-<table class="table table-striped">
-    <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Author</th>
-        <th>Price</th>
-    </tr>
-    <tr th:each="book:${books}">
-        <td th:text="${book.name}"></td>
-        <td th:text="${book.category}"></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.price}"></td>
-        <td><a th:href="@{'/books/'+${book.id}}">view</a></td>
-    </tr>
-</table>
+
+<th:block th:include="header"></th:block>
+
+<div class="wrapper">
+    <h1>All books</h1>
+    <div sec:authorize="hasAuthority('MODERATOR')">
+        <a href="#" th:href="@{/admin/books/create}">
+            <button class="admin-create">create</button>
+        </a>
+    </div>
+    <div class="book-container">
+        <th:block th:each="book: ${books}">
+            <a class="book" th:href="@{'/books/'+${book.id}}">
+                <p class="book-title" th:text="*{book.name}"></p>
+                <div class="description">
+                    <div class="author">
+                        <p>Author</p>
+                        <p class="author-name" th:text="*{book.author}"></p>
+                    </div>
+                    <div class="price">
+                        <p>Price</p>
+                        <p class="price-tag" th:text="*{book.price}"></p>
+                    </div>
+                </div>
+            </a>
+        </th:block>
+
+    </div>
+</div>
 </body>
 </html>

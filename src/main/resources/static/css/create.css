@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 800;
+}
+
+.wrapper {
+    padding: 50px 8%;
+}
+
+.inputs-wrapper {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+input, select {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+.inputs-item {
+    width: 33%;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1200px) {
+    .inputs-item {
+        width: 50%
+    }
+}
+
+.inputs-item h4 {
+    width: 90px;
+}
+
+.inputs-item:nth-child(n+4) {
+    margin-top: 20px;
+}
+
+textarea {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.btn-create {
+    height: 50px;
+    padding: 10px 20px;
+    border: none;
+    background-color: rgb(29, 131, 15);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    float: right;
+    margin-top: 20px;
+}

@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder);
     }
 
+    @Override
     protected void configure(HttpSecurity security) throws Exception {
         security.authorizeRequests()
                 .antMatchers("/books/**", "/users/sign-up", "/users/sign-in").permitAll()
@@ -50,8 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/users/access-denied");
     }
 
+    @Override
     public void configure(WebSecurity security) {
-        security.ignoring()
-                .antMatchers("/static/**", "/images/**");
+        security
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 }
