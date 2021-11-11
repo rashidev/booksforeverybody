@@ -13,6 +13,10 @@ Price: <p th:text="${book.price}"></p>
 Year: <p th:text="${book.year}"></p>
 Description: <p th:text="${book.description}"></p>
 
+<form th:action="@{'/carts/add/book/' + ${book.id}}" method="POST">
+    <button type="submit">Add to cart</button>
+</form>
+
 <table class="table table-striped">
     <tr>
         <th>Message</th>

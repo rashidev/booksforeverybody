@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/books}">Book Store</a>
+        </div>
+        <ul class="nav navbar-nav" sec:authorize="hasAuthority('USER')">
+            <li class="nav-item" sec:authorize="isAuthenticated()"><a
+                    th:href="@{/carts}"
+                    class="nav-link">Cart</a>
+            </li>
+            <li class="nav-item"><a
+                    th:href="@{/orders}"
+                    class="nav-link">Orders</a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item" sec:authorize="isAnonymous()"><a th:href="@{/users/sign-in}" class="nav-link">
+                <span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+            <li class="nav-item" sec:authorize="isAnonymous()"><a th:href="@{/users/sign-up}" class="nav-link">
+                <span class="glyphicon glyphicon-user"></span> Register</a>
+            </li>
+            <li class="nav-item logout" th:fragment="logout" sec:authorize="isAuthenticated()">
+                <form action="#" th:action="@{/users/logout}" method="post">
+                    <input type="submit" value="Logout" class="form-control mr-sm-2"/>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+</body>
+</html>
