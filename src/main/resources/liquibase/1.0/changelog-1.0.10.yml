@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: alter-books-table
+      author: Rashid Alyarov
+      changes:
+        - addColumn:
+            tableName: books
+            columns:
+              - column:
+                  name: image
+                  type: varchar(150)
+#                  defaultValue: "cover.png"
+                  constraints:
+                    nullable: false

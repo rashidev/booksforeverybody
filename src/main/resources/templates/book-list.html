@@ -23,7 +23,9 @@
     </div>
     <div class="book-container">
         <th:block th:each="book: ${books}">
-            <a class="book" th:href="@{'/books/'+${book.id}}">
+            <a class="book" th:href="@{'/books/'+${book.id}}"
+               th:style="'background-image:url(' + @{../static/images/cover.png} + '); background-repeat: no-repeat, repeat; background-size: cover;'"
+               style="background-image: url('../static/images/cover.png')">
                 <p class="book-title" th:text="*{book.name}"></p>
                 <div class="description">
                     <div class="author">

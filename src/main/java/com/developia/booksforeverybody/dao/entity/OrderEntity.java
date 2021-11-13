@@ -32,6 +32,9 @@ public class OrderEntity {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "books_orders",
             joinColumns = @JoinColumn(name = "order_id"),

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Book Store</title>
+</head>
+<body>
+
+<th:block th:include="header"></th:block>
+
+<table class="table table-striped">
+    <tr>
+        <th>Order number</th>
+        <th>Amount</th>
+    </tr>
+
+
+    <th:block th:each="order: ${orders}">
+        <tr>
+            <td th:text="*{order.id}"></td>
+            <td th:text="*{order.totalAmount}"></td>
+        </tr>
+    </th:block>
+
+</table>
+</body>
+</html>

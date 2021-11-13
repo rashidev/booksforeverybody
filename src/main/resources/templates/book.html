@@ -1,33 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/details.css" th:href="@{/css/details.css}">
+    <title>Book details</title>
 </head>
 <body>
-Name: <p th:text="${book.name}"></p>
-Category: <p th:text="${book.category}"></p>
-Author: <p th:text="${book.author}"></p>
-Price: <p th:text="${book.price}"></p>
-Year: <p th:text="${book.year}"></p>
-Description: <p th:text="${book.description}"></p>
 
-<form th:action="@{'/carts/add/book/' + ${book.id}}" method="POST">
-    <button type="submit">Add to cart</button>
-</form>
+<th:block th:include="header"></th:block>
 
-<table class="table table-striped">
-    <tr>
-        <th>Message</th>
-        <th>Rating</th>
-        <th>User</th>
-    </tr>
-    <tr th:each="comment: ${book.comments}">
-        <td th:text="${comment.message}"></td>
-        <td th:text="${comment.rating}"></td>
-        <td th:text="${comment.user.firstName}"></td>
-    </tr>
-</table>
+<div class="wrapper">
+    <h1>Book details</h1>
+    <div class="book-details">
+        <div class="left-details">
+            <h4>Name<span th:text="${book.name}"></span></h4>
+            <h4>Author<span th:text="${book.author}"></span></h4>
+            <h4>Price<span th:text="${book.price}"></span></h4>
+        </div>
+        <div class="right-details">
+            <h4>Published year<span th:text="${book.year}"></span></h4>
+        </div>
+    </div>
+    <hr>
+    <div class="admin-access" sec:authorize="hasAuthority('MODERATOR')">
+        <h1>Moderator access control</h1>
+        <div class="buttons">
+            <a th:href="@{'/moderator/books/' + ${book.id} + '/update'}">
+                <button class="update-btn">Update</button>
+            </a>
+            <span class="m-right"></span>
+            <form th:action="@{'/moderator/books/' + ${book.id} + '/delete'}" method="post">
+                <button type="submit" class="delete-btn">Delete book</button>
+            </form>
+        </div>
+        <div class="access-divider">
+            <hr>
+        </div>
+    </div>
+    <div class="add-review" sec:authorize="hasAuthority('USER')">
+        <form th:action="@{'/carts/add/book/' + ${book.id}}" method="post">
+            <button type="submit" class="add-review-btn">Add to Cart</button>
+        </form>
+        <br/>
+        <form th:action="@{'/books/' + ${book.id} + '/review'}" method="post" th:object="${review}">
+            <div class="inputs">
+                <input type="number" th:field="${review.id}" style="display: none">
+                <div class="input-rating">
+                    <h4>Rating</h4>
+                    <input type="number" th:field="${review.rating}" min="1" max="5" class="rating-input"/>
+                    <label th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"
+                           class="validation-message">
+                    </label>
+                </div>
+                <div class="input-description">
+                    <h4>Description</h4>
+                    <textarea rows="5" cols="60" style="resize: none;" th:field="${review.message}"></textarea>
+                    <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}"
+                           class="validation-message">
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="add-review-btn">Add a review</button>
+        </form>
+    </div>
+    <hr>
+    <div class="reviews">
+        <h1>Reviews</h1>
+        <div class="review-container-heading">
+            <h4>Comments</h4>
+            <h4>Rating</h4>
+            <h4>User</h4>
+        </div>
+        <div class="review-container">
+            <th:block th:each="review: ${book.comments}">
+                <div class="review-item">
+                    <h4 class="comment" th:text="*{review.message}"></h4>
+                    <h4 class="rating">
+                        <th:block th:each="i: ${#numbers.sequence(1, review.rating)}">
+                            <span class="fa fa-star"></span>
+                        </th:block>
+                    </h4>
+                    <h4 th:text="*{review.user.username}"></h4>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
 </body>
 </html>

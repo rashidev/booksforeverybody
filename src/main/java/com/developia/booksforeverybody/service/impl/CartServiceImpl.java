@@ -8,10 +8,15 @@ import com.developia.booksforeverybody.dao.repository.BookRepository;
 import com.developia.booksforeverybody.dao.repository.CartRepository;
 import com.developia.booksforeverybody.dao.repository.UserRepository;
 import com.developia.booksforeverybody.exception.NotFoundException;
+import com.developia.booksforeverybody.model.BookDto;
 import com.developia.booksforeverybody.service.CartService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -27,7 +32,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartEntity getCart(String username) {
+    public List<BookDto> getBooksFromCart(String username) {
         UserEntity user = userRepository
                 .findUserByUsername(username).orElseThrow(
                         () -> {
@@ -41,7 +46,33 @@ public class CartServiceImpl implements CartService {
                             throw new NotFoundException("Cart not found!");
                         }
                 );
-        return cart;
+
+        Map<Long, BookDto> bookMap = new HashMap<>();
+
+        for (BookEntity book : cart.getBooks()) {
+            BookDto bookDto;
+            if (bookMap.containsKey(book.getId())) {
+                bookDto = bookMap.get(book.getId());
+                BigDecimal price = book.getPrice();
+                BigDecimal totalPrice = bookDto.getTotalPrice();
+                totalPrice = totalPrice.add(price); // for double totalPrice + price
+                bookDto.setCount(bookDto.getCount() + 1);
+                bookDto.setTotalPrice(totalPrice);
+            } else {
+                bookDto = BookDto.builder()
+                        .id(book.getId())
+                        .name(book.getName())
+                        .author(book.getAuthor())
+                        .category(book.getCategory())
+                        .price(book.getPrice())
+                        .totalPrice(book.getPrice())
+                        .count(1)
+                        .build();
+            }
+            bookMap.put(book.getId(), bookDto);
+        }
+        List<BookDto> books = new ArrayList<>(bookMap.values());
+        return books;
     }
 
     @Override
