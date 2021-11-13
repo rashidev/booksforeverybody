@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Book Store</title>
+</head>
+<body>
+
+<th:block th:include="header"></th:block>
+
+<div class="container">
+    <form th:action="@{/orders}" method="post" >
+        <h2>Complete the order</h2>
+        <br/>
+        <label>
+            Total amount
+            <output th:text="${totalAmount}"></output>
+        </label>
+        <br/>
+
+        <input type="submit" class="btn btn-success" value="Approve"/>
+    </form>
+</div>
+</body>
+</html>

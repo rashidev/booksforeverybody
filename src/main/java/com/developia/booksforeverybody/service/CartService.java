@@ -1,9 +1,11 @@
 package com.developia.booksforeverybody.service;
 
-import com.developia.booksforeverybody.dao.entity.CartEntity;
+import com.developia.booksforeverybody.model.BookDto;
+
+import java.util.List;
 
 public interface CartService {
-    CartEntity getCart(String username);
+    List<BookDto> getBooksFromCart(String username);
 
     void addBookToCart(String username, Long bookId);
 

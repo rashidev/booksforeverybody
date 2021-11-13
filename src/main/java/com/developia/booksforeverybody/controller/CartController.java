@@ -21,9 +21,9 @@ public class CartController {
 
     @GetMapping
     public String getCart(Model model, Authentication authentication) {
-        var cart = cartService.getCart(authentication.getName());
+        var books = cartService.getBooksFromCart(authentication.getName());
 
-        model.addAttribute("cart", cart);
+        model.addAttribute("books", books);
 
         return "cart";
     }

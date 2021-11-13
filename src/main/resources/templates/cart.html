@@ -6,18 +6,23 @@
     <title>Books</title>
 </head>
 <body>
+
+<th:block th:include="header"/>
+
 <table class="table table-striped">
     <tr>
         <th>Name</th>
         <th>Category</th>
         <th>Author</th>
         <th>Price</th>
+        <th>Count</th>
     </tr>
-    <tr th:each="book:${cart.books}">
+    <tr th:each="book:${books}">
         <td th:text="${book.name}"></td>
         <td th:text="${book.category}"></td>
         <td th:text="${book.author}"></td>
-        <td th:text="${book.price}"></td>
+        <td th:text="${book.totalPrice}"></td>
+        <td th:text="${book.count}"></td>
         <td><a th:href="@{'/books/'+${book.id}}">view</a></td>
         <td>
             <form th:action="@{'/carts/remove/book/'+${book.id}}" method="post">
@@ -26,5 +31,6 @@
         </td>
     </tr>
 </table>
+<a th:href="@{/orders/confirm-page}" type="button" class="btn btn-create">Complete order</a>
 </body>
 </html>

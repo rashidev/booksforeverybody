@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: alter-orders-table
+      author: Rashid Alyarov
+      changes:
+        - addColumn:
+            tableName: orders
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false

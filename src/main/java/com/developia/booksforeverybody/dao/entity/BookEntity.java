@@ -64,6 +64,9 @@ public class BookEntity {
     @Column(name = "year")
     private Integer year;
 
+    @Column(name = "image")
+    private String image;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private List<CommentEntity> comments = new ArrayList<>();
