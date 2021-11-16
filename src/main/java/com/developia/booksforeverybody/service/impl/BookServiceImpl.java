@@ -12,6 +12,7 @@ import com.developia.booksforeverybody.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class BookServiceImpl implements BookService {
     private  final BookRepository bookRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+
 
 
 
@@ -50,4 +52,47 @@ public class BookServiceImpl implements BookService {
         commentRepository.save(comment);
 
     }
+
+    @Override
+    public void createBook(BookEntity bookEntity) {
+        bookEntity.setStatus(BookStatus.CREATED);
+        bookRepository.save(bookEntity);
+    }
+
+    @Override
+    public void deleteBook(Long bookId) {
+
+        BookEntity book = bookRepository.findById(
+                bookId).orElseThrow(
+                () -> {
+                    throw new NotFoundException("Book not found");
+                }
+        );
+        book.setStatus(BookStatus.DELETED);
+        bookRepository.save(book);
+    }
+
+    @Override
+    public void updateBook(BookEntity newBookData, Long bookId){
+
+        BookEntity book = bookRepository.findByIdAndStatusIsNot(
+                bookId, BookStatus.DELETED).orElseThrow(
+                () -> {
+                    throw new NotFoundException("Book not found");
+                }
+        );
+        book.setName(newBookData.getName());
+        book.setCategory(newBookData.getCategory());
+        book.setDescription(newBookData.getDescription());
+        book.setAuthor(newBookData.getAuthor());
+        book.setPrice(newBookData.getPrice());
+        book.setPublisher(newBookData.getPublisher());
+        book.setUpdatedAt(LocalDateTime.now());
+        book.setYear(newBookData.getYear());
+        book.setImage(newBookData.getImage());
+        bookRepository.save(book);
+
+    }
+
+
 }

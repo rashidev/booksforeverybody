@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception {
         security.authorizeRequests()
                 .antMatchers("/books/**", "/users/sign-up", "/users/sign-in").permitAll()
-                .antMatchers("/carts/**").hasAuthority(Role.USER.name())
+                .antMatchers("/carts/**", "/orders/**").hasAuthority(Role.USER.name())
                 .antMatchers("/moderator/**").hasAuthority(Role.MODERATOR.name())
                 .anyRequest().authenticated()
                 .and().formLogin()
