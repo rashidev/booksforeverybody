@@ -11,5 +11,15 @@ public interface BookService {
 
     BookEntity getBookById(Long id);
 
-    void addReview(String username, CommentEntity comment, Long bookId);
+    void addReview(String username, CommentEntity comment,
+                   Long bookId);
+    void createBook (BookEntity bookEntity);
+
+    void deleteBook(Long bookId);
+
+    void updateBook (BookEntity bookEntity, Long bookId);
+
+
+
 }
+
