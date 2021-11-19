@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update book details</title>
+</head>
+<body>
+<th:block th:include="header"></th:block>
+
+<h1>Update book</h1>
+
+<form th:action="@{'/moderator/books/' + ${book.id} + '/update'}" th:object="${book}" method="post">
+    <label>
+        Name
+        <input type="text" th:field="${book.name}"/>
+    </label>
+    <label>
+        Author
+        <input type="text" th:field="${book.author}"/>
+    </label>
+    <label>
+        Price
+        <input type="number" th:field="${book.price}"/>
+    </label>
+    <br/>
+    <label>
+        Publisher
+        <input type="text" th:field="${book.publisher}"/>
+    </label>
+    <label>
+        Year
+        <input type="number" th:field="${book.year}"/>
+    </label>
+    <br/>
+    <label>
+        Image
+        <input type="text" th:field="${book.image}"/>
+    </label>
+
+    <label>
+        Genre
+        <select id="genre" th:field="${book.category}">
+            <option value="CLASSICS">Classics</option>
+            <option value="DETECTIVE">Detective</option>
+            <option value="FANTASY">Fantasy</option>
+            <option value="SCIENCE">Science</option>
+            <option value="DRAMA">Drama</option>
+        </select>
+    </label>
+    <br/>
+    <label>
+        Description
+        <textarea th:field="${book.description}"/>
+    </label>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

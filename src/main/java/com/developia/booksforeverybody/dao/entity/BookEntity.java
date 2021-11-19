@@ -3,6 +3,7 @@ package com.developia.booksforeverybody.dao.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,8 +68,15 @@ public class BookEntity {
     @Column(name = "image")
     private String image;
 
+    @Where(clause = "status != 'DELETED'")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private List<CommentEntity> comments = new ArrayList<>();
+
+    /*
+    select * from books join comments
+        on comments.book_id = books.id
+        where comments.status != 'DELETED'
+    * */
 
 }
