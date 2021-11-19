@@ -30,7 +30,7 @@
     <div class="admin-access" sec:authorize="hasAuthority('MODERATOR')">
         <h1>Moderator access control</h1>
         <div class="buttons">
-            <a th:href="@{'/moderator/books/' + ${book.id} + '/update'}">
+            <a th:href="@{'/moderator/books/' + ${book.id} + '/update-page'}">
                 <button class="update-btn">Update</button>
             </a>
             <span class="m-right"></span>
@@ -86,6 +86,11 @@
                         </th:block>
                     </h4>
                     <h4 th:text="*{review.user.username}"></h4>
+                    <form th:action="@{'/moderator/books/' + ${book.id} + '/review/' + ${review.id} + '/delete'}"
+                          method="post"
+                          sec:authorize="hasAuthority('MODERATOR')">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
             </th:block>
         </div>

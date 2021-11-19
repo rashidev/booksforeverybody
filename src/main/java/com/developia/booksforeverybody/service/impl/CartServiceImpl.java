@@ -10,6 +10,7 @@ import com.developia.booksforeverybody.dao.repository.UserRepository;
 import com.developia.booksforeverybody.exception.NotFoundException;
 import com.developia.booksforeverybody.model.BookDto;
 import com.developia.booksforeverybody.service.CartService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,7 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class CartServiceImpl implements CartService {
+    //    Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
@@ -77,13 +80,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addBookToCart(String username, Long bookId) {
+        log.info("addBookToCart started");
+
+        log.debug("findUserByUsername where username is {}", username);
         UserEntity user = userRepository
                 .findUserByUsername(username).orElseThrow(
                         () -> {
+                            log.error("findUserByUsername failed");
                             throw new NotFoundException("User not found!");
                         }
                 );
-
+        log.debug("findUserByUsername where username is {} ended", username);
         BookEntity book = bookRepository
                 .findByIdAndStatusIsNot(bookId, BookStatus.DELETED)
                 .orElseThrow(
@@ -98,6 +105,8 @@ public class CartServiceImpl implements CartService {
         cart.setUserId(user.getId());
         cart.setBooks(books);
         cartRepository.save(cart);
+
+        log.info("addBookToCart ended");
     }
 
     @Override

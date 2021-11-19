@@ -6,11 +6,11 @@ spring:
   liquibase:
     change-log: classpath:liquibase/changelog-master.yml
   jpa:
-#    show-sql: true
+    show-sql: true
     properties:
-#      hibernate:
-#        show-sql: true
-#        format-sql: true
+      hibernate:
+        show-sql: true
+        format-sql: true
       javax:
         persistence:
           validation:

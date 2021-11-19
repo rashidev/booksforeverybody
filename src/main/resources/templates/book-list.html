@@ -17,7 +17,7 @@
 <div class="wrapper">
     <h1>All books</h1>
     <div sec:authorize="hasAuthority('MODERATOR')">
-        <a href="#" th:href="@{/admin/books/create}">
+        <a href="#" th:href="@{/moderator/books/create-page}">
             <button class="admin-create">create</button>
         </a>
     </div>

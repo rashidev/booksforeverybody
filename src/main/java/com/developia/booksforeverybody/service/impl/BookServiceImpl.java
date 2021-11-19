@@ -3,6 +3,7 @@ package com.developia.booksforeverybody.service.impl;
 import com.developia.booksforeverybody.dao.entity.BookEntity;
 import com.developia.booksforeverybody.dao.entity.BookStatus;
 import com.developia.booksforeverybody.dao.entity.CommentEntity;
+import com.developia.booksforeverybody.dao.entity.CommentStatus;
 import com.developia.booksforeverybody.dao.entity.UserEntity;
 import com.developia.booksforeverybody.dao.repository.BookRepository;
 import com.developia.booksforeverybody.dao.repository.CommentRepository;
@@ -19,12 +20,9 @@ import java.util.List;
 @AllArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    private  final BookRepository bookRepository;
+    private final BookRepository bookRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
-
-
-
 
     @Override
     public List<BookEntity> getAllBooks() {
@@ -33,9 +31,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEntity getBookById(Long id) {
-        return bookRepository.findByIdAndStatusIsNot(id,BookStatus.DELETED).orElseThrow(
-                ()->{
-                  throw new NotFoundException("Book not found");
+        return bookRepository.findByIdAndStatusIsNot(id, BookStatus.DELETED).orElseThrow(
+                () -> {
+                    throw new NotFoundException("Book not found");
                 }
         );
     }
@@ -43,11 +41,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public void addReview(String username, CommentEntity comment, Long bookId) {
         UserEntity user = userRepository.findUserByUsername(username).orElseThrow(
-                ()->{
+                () -> {
                     throw new NotFoundException("User not found!");
                 }
         );
         comment.setUser(user);
+        comment.setStatus(CommentStatus.CREATED);
         comment.setBookId(bookId);
         commentRepository.save(comment);
 
@@ -56,6 +55,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public void createBook(BookEntity bookEntity) {
         bookEntity.setStatus(BookStatus.CREATED);
+        bookEntity.setCreatedAt(LocalDateTime.now());
+        bookEntity.setUpdatedAt(LocalDateTime.now());
         bookRepository.save(bookEntity);
     }
 
@@ -73,7 +74,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(BookEntity newBookData, Long bookId){
+    public void updateBook(BookEntity newBookData, Long bookId) {
 
         BookEntity book = bookRepository.findByIdAndStatusIsNot(
                 bookId, BookStatus.DELETED).orElseThrow(
@@ -94,5 +95,15 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @Override
+    public void deleteReview(Long reviewId) {
+        CommentEntity commentEntity = commentRepository.findById(reviewId).orElseThrow(
+                () -> {
+                    throw new NotFoundException("comment not found");
+                }
+        );
+        commentEntity.setStatus(CommentStatus.DELETED);
+        commentRepository.save(commentEntity);
+    }
 
 }
